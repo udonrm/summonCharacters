@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "summon characters",
+  "description": "let's summon characters",
+  "version": "1.0",
+  "action": {},
+  "permissions": ["activeTab", "contextMenus", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.ts"],
+      "css": ["content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
