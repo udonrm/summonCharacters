@@ -3,7 +3,7 @@ import { Character, Position } from "./character";
 const divElement = document.createElement("div");
 const imgUrl = chrome.runtime.getURL("images/dog.png");
 divElement.innerHTML = `<img src="${imgUrl}"/>`;
-document.body.appendChild(divElement);
+document.documentElement.appendChild(divElement);
 divElement.setAttribute("id", "summonCharacters");
 
 const applyPositionToStyle = (position: Position) => {

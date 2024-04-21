@@ -21,20 +21,39 @@ export class Character {
 
   public startAction = async (): Promise<void> => {
     while (true) {
-      this.selectDestination();
-      this.moveToDestination();
-      await this.sleep(10000);
+      if (!this.destination) {
+        this.selectDestination();
+      }
+      await this.moveTowardDestination();
     }
   };
 
-  private moveToDestination = (): void => {
+  private moveTowardDestination = async (): Promise<void> => {
     if (!this.destination) {
       return;
     }
+    let diffTop = this.destination.top - this.current.top;
+    let diffLeft = this.destination.left - this.current.left;
+
+    while (Math.abs(diffTop) > 1) {
+      const moveDistanceTowardTop = diffTop > 0 ? 1 : -1;
+      this.current.top += moveDistanceTowardTop;
+      this.applyPositionToStyle(this.current);
+      diffTop -= moveDistanceTowardTop;
+      await this.sleep(16);
+    }
     this.current.top = this.destination.top;
+
+    while (Math.abs(diffLeft) > 1) {
+      const moveDistanceTowardLeft = diffLeft > 0 ? 1 : -1;
+      this.current.left += moveDistanceTowardLeft;
+      this.applyPositionToStyle(this.current);
+      diffLeft -= moveDistanceTowardLeft;
+      await this.sleep(16);
+    }
     this.current.left = this.destination.left;
 
-    this.applyPositionToStyle(this.current);
+    this.destination = undefined;
   };
 
   /**
